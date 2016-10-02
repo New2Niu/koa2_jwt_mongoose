@@ -1,0 +1,26 @@
+{
+  "name": "koa2_jwt_mongoose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "supervisor -w server start.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ray",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.16.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-3": "^6.16.0",
+    "koa-convert": "^1.2.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^7.1.9",
+    "koa": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-cors": "^0.0.16",
+    "koa-router": "^7.0.1"
+  }
+}

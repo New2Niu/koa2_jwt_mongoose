@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+    	
+    	fetch('http://127.0.0.1:9090/login',{
+    		method:'GET',
+		    credentials:"include",
+    		mode:'cors',
+    	}).then(res=>{
+    		return res.json()
+    	}).then(data=>{
+    		console.log(data);
+    		localStorage.setItem('token',data.token);
+
+    		fetch('http://127.0.0.1:9090/test',{
+    			method:'GET',
+	    		headers:{
+	    			'Authorization':'Bearer '+localStorage.getItem('token')
+	    		},
+			    credentials:"include",
+	    		mode:'cors',
+    		}).then(res=>{
+    			return res.json()
+    		}).then(data=>{
+    			console.log(data);
+    		})
+
+    	})
+
+    </script>
+</html>
