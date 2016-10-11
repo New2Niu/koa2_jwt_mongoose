@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2016-10-02 16:35:05
 * @Last Modified by:   Administrator
-* @Last Modified time: 2016-10-02 18:33:06
+* @Last Modified time: 2016-10-08 14:50:23
 * @Function:koa中间件
 */
 
@@ -12,7 +12,7 @@ import koaCors from 'koa-cors';
 import koaConvert from 'koa-convert';
 import koaBodyparser from 'koa-bodyparser';
 import router from '../router';
-
+import {CERT} from '../config/config';
 /**
  * 打印URL,method
  * @param  {[type]}   ctx  [description]
@@ -30,7 +30,7 @@ import router from '../router';
  * @return {[type]}        [description]
  */
  const verifyToken = async (ctx,next)=>{
-	if(ctx.url==='/login'){
+	if(ctx.url==='/login'||ctx.url==='/'){
 		await next();
 	}else{
 		let auth = ctx.get('Authorization');
@@ -38,7 +38,7 @@ import router from '../router';
 		let token = auth.split(' ')[1];
 		let tokenContent;
 		try{
-			tokenContent = jwt.verify(token,'xxx');
+			tokenContent = jwt.verify(token,CERT);
 			console.log('tc:',tokenContent);
 			await next();
 		}catch(err){
@@ -48,7 +48,7 @@ import router from '../router';
 	}
 }
 
- const cors = koaConvert(koaCors({
+const cors = koaConvert(koaCors({
 	maxAge: 7 * 24 * 60 * 60,
 	// 7 days 预请求头有效期
 	credentials: true,
