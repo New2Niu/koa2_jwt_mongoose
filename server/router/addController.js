@@ -2,7 +2,7 @@
 * @Author: Administrator
 * @Date:   2016-10-02 23:43:27
 * @Last Modified by:   Administrator
-* @Last Modified time: 2016-10-10 10:04:21
+* @Last Modified time: 2016-10-17 16:19:08
 * @function:加载route
 */
 
@@ -44,8 +44,8 @@ const addController = (router,dirpath)=>{
 						addController(router,pathname);
 						next(i+1);
 					}else{
-						if(pathname.endsWith('js')){
-							const ctrlMap = require(pathname)['default'];
+						if(pathname.endsWith('.js')){
+							const ctrlMap = require(pathname).default;
 							addMapping(router,ctrlMap)
 						}
 						next(i+1);
@@ -56,4 +56,20 @@ const addController = (router,dirpath)=>{
 	});
 }
 
-export default addController;
+const addControllerSync=(router,dirpath)=>{
+	let files = fs.readdirSync(dirpath);
+	files.forEach(file=>{
+		let pathname  = path.join(dirpath,file);
+		let stat = fs.statSync(pathname);
+		if (stat.isDirectory()) {
+			addControllerSync(router,pathname);
+		}else{
+			if(file.endsWith('.js')){
+				let ctrlMap = require(pathname).default;
+				addMapping(router,ctrlMap);
+			}
+		}
+	})
+}
+
+export default addControllerSync;
